@@ -8,7 +8,9 @@ direction = "Right"
 clock = pygame.time.Clock()
 cell_y = 40
 cell_x = 40
-board = [[0]*cell_x]*cell_y
+board = []
+for _ in range (cell_y):
+    board.append([0]*cell_x)
 cell_size = screen_size[0]/cell_x
 
 running = True
@@ -19,7 +21,6 @@ while running:
             running = False
 
     screen.fill((6, 189, 36))
-    pygame.display.flip()
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
         direction = "Up"
@@ -37,6 +38,13 @@ while running:
 
     for y,row in enumerate(board):
         for x,cell in enumerate(row):
-            ...
+            if cell == 1:
+                pygame.draw.rect(screen,[0, 63, 212],[x*cell_size,y*cell_size,cell_size,cell_size])
+            if cell == 2:
+                pygame.draw.rect(screen,[61, 14, 156],[x*cell_size,y*cell_size,cell_size,cell_size])
+            if cell == 3:
+                 pygame.draw.rect(screen,[227, 7, 14],[x*cell_size,y*cell_size,cell_size,cell_size])
+
+    pygame.display.flip()
 
 
