@@ -1,11 +1,15 @@
 import pygame
 
 pygame.init()
-screen = pygame.display.set_mode((1000,1000))
+screen_size = (1000,1000)
+screen = pygame.display.set_mode(screen_size)
 direction = "Right"
 
 clock = pygame.time.Clock()
-
+cell_y = 40
+cell_x = 40
+board = [[0]*cell_x]*cell_y
+cell_size = screen_size[0]/cell_x
 
 running = True
 while running:
@@ -29,6 +33,10 @@ while running:
     if keys[pygame.K_d]:
         direction = "Right"
 
-
     print (direction)
+
+    for y,row in enumerate(board):
+        for x,cell in enumerate(row):
+            ...
+
 
