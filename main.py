@@ -38,6 +38,9 @@ while running:
 
     for y,row in enumerate(board):
         for x,cell in enumerate(row):
+            if cell == 0:
+                if (x+y) % 2 == 0:
+                    pygame.draw.rect(screen,[17, 140, 37],[x*cell_size,y*cell_size,cell_size,cell_size])
             if cell == 1:
                 pygame.draw.rect(screen,[0, 63, 212],[x*cell_size,y*cell_size,cell_size,cell_size])
             if cell == 2:
