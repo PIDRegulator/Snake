@@ -10,8 +10,8 @@ direction = (0,1)
 
 clock = pygame.time.Clock()
 score = 0
-cell_y = 4
-cell_x = 4
+cell_y = 20
+cell_x = 20 #ukonci live share
 apple = [random.randint(0,cell_y-1),random.randint(0,cell_x-1)]
 snake = [1,1]
 cell_size = screen_size[0]/cell_x
@@ -45,8 +45,7 @@ while running:
 
     if keys[pygame.K_d]:
         direction = (0,1)
-        
-    # print(framerate)
+
     print(score)
 
     if movecount ==0:
@@ -66,5 +65,6 @@ while running:
     screen.blit(background,(0,0))
     pygame.draw.rect(screen,[227, 7, 14],[apple[1]*cell_size,apple[0]*cell_size,cell_size,cell_size])
     pygame.draw.rect(screen,[0,0,255],[snake[1]*cell_size,snake[0]*cell_size,cell_size,cell_size])
+    pygame.display.flip()
 
 
