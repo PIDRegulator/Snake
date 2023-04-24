@@ -29,5 +29,6 @@ while running:
     if keys[pygame.K_d]:
         direction = "Right"
 
+
     print (direction)
 
