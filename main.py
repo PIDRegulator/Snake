@@ -1,21 +1,33 @@
 import pygame
+import random
+
 
 pygame.init()
 screen_size = (1000,1000)
+
 screen = pygame.display.set_mode(screen_size)
-direction = "Right"
+direction = (0,1)
 
 clock = pygame.time.Clock()
-cell_y = 40
-cell_x = 40
-board = []
-for _ in range (cell_y):
-    board.append([0]*cell_x)
+score = 0
+cell_y = 4
+cell_x = 4
+apple = [random.randint(0,cell_y-1),random.randint(0,cell_x-1)]
+snake = [1,1]
 cell_size = screen_size[0]/cell_x
+background = pygame.Surface(screen_size)
+background.fill((6, 189, 36))
+for y in range(cell_y):
+    for x in range(cell_x):
+        if (x+y) % 2 == 0:
+            pygame.draw.rect(background,[17, 140, 37],[x*cell_size,y*cell_size,cell_size,cell_size])
+                 
 
 running = True
+movecount = 20
 while running:
     clock.tick(60)
+    framerate = clock.get_fps()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -23,31 +35,36 @@ while running:
     screen.fill((6, 189, 36))
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
-        direction = "Up"
+        direction = (-1,0)
 
     if keys[pygame.K_s]:
-        direction = "Down"
+        direction = (1,0)
 
     if keys[pygame.K_a]:
-        direction = "Left"
+        direction = (0,-1)
 
     if keys[pygame.K_d]:
-        direction = "Right"
+        direction = (0,1)
+        
+    # print(framerate)
+    print(score)
 
-    print (direction)
+    if movecount ==0:
+        snake[0] += direction[0]
+        snake[1] += direction[1]
+        if snake[0] >= cell_y or snake[1] >= cell_x:
+            running = False
+        if snake[0] < 0 or snake[1] < 0:
+            running = False
+        if snake == apple:
+            apple = [random.randint(0,cell_y-1),random.randint(0,cell_x-1)]
+            score += 1
+        movecount = 20
+    else:
+        movecount -= 1
 
-    for y,row in enumerate(board):
-        for x,cell in enumerate(row):
-            if cell == 0:
-                if (x+y) % 2 == 0:
-                    pygame.draw.rect(screen,[17, 140, 37],[x*cell_size,y*cell_size,cell_size,cell_size])
-            if cell == 1:
-                pygame.draw.rect(screen,[0, 63, 212],[x*cell_size,y*cell_size,cell_size,cell_size])
-            if cell == 2:
-                pygame.draw.rect(screen,[61, 14, 156],[x*cell_size,y*cell_size,cell_size,cell_size])
-            if cell == 3:
-                 pygame.draw.rect(screen,[227, 7, 14],[x*cell_size,y*cell_size,cell_size,cell_size])
-
-    pygame.display.flip()
+    screen.blit(background,(0,0))
+    pygame.draw.rect(screen,[227, 7, 14],[apple[1]*cell_size,apple[0]*cell_size,cell_size,cell_size])
+    pygame.draw.rect(screen,[0,0,255],[snake[1]*cell_size,snake[0]*cell_size,cell_size,cell_size])
 
 
