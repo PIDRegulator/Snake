@@ -10,10 +10,10 @@ direction = (0,1)
 
 clock = pygame.time.Clock()
 score = 0
-cell_y = 10
-cell_x = 10 #ukonci live share
+cell_y = 25
+cell_x = 25 #ukonci live share
 apple = [random.randint(0,cell_y-1),random.randint(0,cell_x-1)]
-snake = [1,1]
+snake = [[1,1]]
 cell_size = screen_size[0]/cell_x
 background = pygame.Surface(screen_size)
 background.fill((6, 189, 36))
@@ -47,23 +47,31 @@ while running:
         direction = (0,1)
 
     if movecount ==0:
-        snake[0] += direction[0]
-        snake[1] += direction[1]
-        if snake[0] >= cell_y or snake[1] >= cell_x:
+        new_y = snake[-1][0] + direction[0]
+        new_x = snake[-1][1] + direction[1]
+        new_body = [new_y,new_x]
+        if snake[-1][0] >= cell_y or snake[-1][1] >= cell_x:
             running = False
-        if snake[0] < 0 or snake[1] < 0:
+        if snake[-1][0] < 0 or snake[-1][1] < 0:
             running = False
-        if snake == apple:
+        if apple in snake:
             apple = [random.randint(0,cell_y-1),random.randint(0,cell_x-1)]
             score += 1
             print(score)
+        else:
+            snake.pop(0)
+        if new_body in snake:
+            running = False
+        snake.append(new_body)
         movecount = 20
     else:
         movecount -= 1
 
     screen.blit(background,(0,0))
     pygame.draw.rect(screen,[227, 7, 14],[apple[1]*cell_size,apple[0]*cell_size,cell_size,cell_size])
-    pygame.draw.rect(screen,[0,0,255],[snake[1]*cell_size,snake[0]*cell_size,cell_size,cell_size])
+    for body in snake[:-1]:
+        pygame.draw.rect(screen,[0,0,255],[body[1]*cell_size,body[0]*cell_size,cell_size,cell_size])
+    pygame.draw.rect(screen,[2, 2, 171],[snake[-1][1]*cell_size,snake[-1][0]*cell_size,cell_size,cell_size])
     pygame.display.flip()
 
 print(f"your score is {score}")
