@@ -6,28 +6,34 @@ pygame.init()
 screen_size = (1000,1000)
 y_offset = 100
 
-font = pygame.font.Font('MINECRAFT.otf', 80)
+font = pygame.font.Font('MINECRAFT.otf', 70)
 
 screen = pygame.display.set_mode((screen_size[0],screen_size[1]+y_offset))
 direction = (0,1)
 old_direction = (0,1)
 
 clock = pygame.time.Clock()
-speed = 75
+speed = 20
 score = 0
-cell_y = 3
-cell_x = 3
-max_len = cell_x*cell_y
-apple = [random.randint(0,cell_y-1),random.randint(0,cell_x-1)]
+cells = 20
+max_len = cells*cells
+apple = [random.randint(0,cells-1),random.randint(0,cells-1)]
 snake = [[1,1]]
-cell_size = screen_size[0]/cell_x
+cell_size = screen_size[0]/cells
 background = pygame.Surface(screen_size)
 background.fill((6, 189, 36))
-for y in range(cell_y):
-    for x in range(cell_x):
+for y in range(cells):
+    for x in range(cells):
         if (x+y) % 2 == 0:
             pygame.draw.rect(background,[17, 140, 37],[x*cell_size,y*cell_size,cell_size,cell_size])
                  
+f = open("highscore.txt","r")
+highs = int(f.read().splitlines()[0])
+if highs > 0:
+    highscore_str = f"highscore: {highs}"
+else:
+    highscore_str = ""
+
 
 running = True
 movecount = speed
@@ -38,7 +44,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    screen.fill((0,0,0))
+    screen.fill((46, 92, 43))
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
         direction = (-1,0)
@@ -60,7 +66,7 @@ while running:
         new_y = snake[-1][0] + direction[0]
         new_x = snake[-1][1] + direction[1]
         new_body = [new_y,new_x]
-        if snake[-1][0] >= cell_y or snake[-1][1] >= cell_x:
+        if snake[-1][0] >= cells or snake[-1][1] >= cells:
             running = False
         if snake[-1][0] < 0 or snake[-1][1] < 0:
             running = False
@@ -72,7 +78,7 @@ while running:
                 continue
             else:
                 while apple in snake+[new_body]:
-                    apple = [random.randint(0,cell_y-1),random.randint(0,cell_x-1)]
+                    apple = [random.randint(0,cells-1),random.randint(0,cells-1)]
             
             print(score)
         else:
@@ -93,9 +99,17 @@ while running:
         pygame.draw.rect(screen,[0,0,color],[body[1]*cell_size,body[0]*cell_size,cell_size,cell_size])
     pygame.draw.rect(screen,[0, 0, colors[-1]],[snake[-1][1]*cell_size,snake[-1][0]*cell_size,cell_size,cell_size])
 
-    text = font.render(f'score : {score}', True, (255,255,255))
-    screen.blit(text,(0,screen_size[1]))
+    text = font.render(f'score: {score}; {highscore_str}', True, (255,255,255))
+    text_rect = text.get_rect()
+    screen.blit(text,((screen_size[0]-text_rect.width)/2,screen_size[1]+(y_offset-text_rect.height)/2))
 
     pygame.display.flip()
 
 print(f"your score is {score}")
+
+f = open("highscore.txt","r")
+highs = int(f.read().splitlines()[0])
+if score > highs:
+    f = open("highscore.txt","w")
+    f.write(str(score))
+    f.close()
