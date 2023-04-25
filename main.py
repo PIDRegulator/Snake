@@ -9,9 +9,10 @@ screen = pygame.display.set_mode(screen_size)
 direction = (0,1)
 
 clock = pygame.time.Clock()
+speed = 15
 score = 0
-cell_y = 25
-cell_x = 25 #ukonci live share
+cell_y = 8
+cell_x = 8 #ukonci live share
 apple = [random.randint(0,cell_y-1),random.randint(0,cell_x-1)]
 snake = [[1,1]]
 cell_size = screen_size[0]/cell_x
@@ -24,7 +25,7 @@ for y in range(cell_y):
                  
 
 running = True
-movecount = 20
+movecount = speed
 while running:
     clock.tick(60)
     framerate = clock.get_fps()
@@ -34,6 +35,7 @@ while running:
 
     screen.fill((6, 189, 36))
     keys = pygame.key.get_pressed()
+    old_direction = direction
     if keys[pygame.K_w]:
         direction = (-1,0)
 
@@ -45,6 +47,9 @@ while running:
 
     if keys[pygame.K_d]:
         direction = (0,1)
+
+    if old_direction != direction and old_direction[0] + direction[0] == 0:
+        direction = old_direction
 
     if movecount ==0:
         new_y = snake[-1][0] + direction[0]
@@ -63,7 +68,7 @@ while running:
         if new_body in snake:
             running = False
         snake.append(new_body)
-        movecount = 20
+        movecount = speed
     else:
         movecount -= 1
 
