@@ -7,12 +7,14 @@ screen_size = (1000,1000)
 
 screen = pygame.display.set_mode(screen_size)
 direction = (0,1)
+old_direction = (0,1)
 
 clock = pygame.time.Clock()
-speed = 25
+speed = 75
 score = 0
-cell_y = 5
-cell_x = 5 #ukonci live share
+cell_y = 3
+cell_x = 3
+max_len = cell_x*cell_y
 apple = [random.randint(0,cell_y-1),random.randint(0,cell_x-1)]
 snake = [[1,1]]
 cell_size = screen_size[0]/cell_x
@@ -35,7 +37,6 @@ while running:
 
     screen.fill((6, 189, 36))
     keys = pygame.key.get_pressed()
-    old_direction = direction
     if keys[pygame.K_w]:
         direction = (-1,0)
 
@@ -52,6 +53,7 @@ while running:
         direction = old_direction
 
     if movecount ==0:
+        old_direction = direction
         new_y = snake[-1][0] + direction[0]
         new_x = snake[-1][1] + direction[1]
         new_body = [new_y,new_x]
@@ -60,8 +62,15 @@ while running:
         if snake[-1][0] < 0 or snake[-1][1] < 0:
             running = False
         if apple == new_body:
-            apple = [random.randint(0,cell_y-1),random.randint(0,cell_x-1)]
             score += 1
+            if len(snake)+1>=max_len:
+                running = False
+                print("you won")
+                continue
+            else:
+                while apple in snake+[new_body]:
+                    apple = [random.randint(0,cell_y-1),random.randint(0,cell_x-1)]
+            
             print(score)
         else:
             snake.pop(0)
@@ -71,6 +80,7 @@ while running:
         movecount = speed
     else:
         movecount -= 1
+    
 
     screen.blit(background,(0,0))
     pygame.draw.rect(screen,[227, 7, 14],[apple[1]*cell_size,apple[0]*cell_size,cell_size,cell_size])
