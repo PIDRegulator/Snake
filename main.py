@@ -4,8 +4,11 @@ import random
 
 pygame.init()
 screen_size = (1000,1000)
+y_offset = 100
 
-screen = pygame.display.set_mode(screen_size)
+font = pygame.font.Font('MINECRAFT.otf', 80)
+
+screen = pygame.display.set_mode((screen_size[0],screen_size[1]+y_offset))
 direction = (0,1)
 old_direction = (0,1)
 
@@ -35,7 +38,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    screen.fill((6, 189, 36))
+    screen.fill((0,0,0))
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
         direction = (-1,0)
@@ -89,6 +92,10 @@ while running:
         color = colors[i]
         pygame.draw.rect(screen,[0,0,color],[body[1]*cell_size,body[0]*cell_size,cell_size,cell_size])
     pygame.draw.rect(screen,[0, 0, colors[-1]],[snake[-1][1]*cell_size,snake[-1][0]*cell_size,cell_size,cell_size])
+
+    text = font.render(f'score : {score}', True, (255,255,255))
+    screen.blit(text,(0,screen_size[1]))
+
     pygame.display.flip()
 
 print(f"your score is {score}")
