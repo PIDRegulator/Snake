@@ -9,10 +9,10 @@ screen = pygame.display.set_mode(screen_size)
 direction = (0,1)
 
 clock = pygame.time.Clock()
-speed = 15
+speed = 25
 score = 0
-cell_y = 8
-cell_x = 8 #ukonci live share
+cell_y = 5
+cell_x = 5 #ukonci live share
 apple = [random.randint(0,cell_y-1),random.randint(0,cell_x-1)]
 snake = [[1,1]]
 cell_size = screen_size[0]/cell_x
@@ -59,7 +59,7 @@ while running:
             running = False
         if snake[-1][0] < 0 or snake[-1][1] < 0:
             running = False
-        if apple in snake:
+        if apple == new_body:
             apple = [random.randint(0,cell_y-1),random.randint(0,cell_x-1)]
             score += 1
             print(score)
@@ -74,9 +74,11 @@ while running:
 
     screen.blit(background,(0,0))
     pygame.draw.rect(screen,[227, 7, 14],[apple[1]*cell_size,apple[0]*cell_size,cell_size,cell_size])
-    for body in snake[:-1]:
-        pygame.draw.rect(screen,[0,0,255],[body[1]*cell_size,body[0]*cell_size,cell_size,cell_size])
-    pygame.draw.rect(screen,[2, 2, 171],[snake[-1][1]*cell_size,snake[-1][0]*cell_size,cell_size,cell_size])
+    colors = range(0,255,round(255/len(snake)))[::-1]
+    for i,body in enumerate(snake[:-1]):
+        color = colors[i]
+        pygame.draw.rect(screen,[0,0,color],[body[1]*cell_size,body[0]*cell_size,cell_size,cell_size])
+    pygame.draw.rect(screen,[0, 0, colors[-1]],[snake[-1][1]*cell_size,snake[-1][0]*cell_size,cell_size,cell_size])
     pygame.display.flip()
 
 print(f"your score is {score}")
