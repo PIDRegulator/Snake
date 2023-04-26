@@ -1,9 +1,9 @@
 import pygame
 import random
-
+import time
 
 pygame.init()
-screen_size = (1000,1000)
+screen_size = (800,800)
 y_offset = 100
 screen = pygame.display.set_mode((screen_size[0],screen_size[1]+y_offset))
 
@@ -11,6 +11,10 @@ font = pygame.font.Font('MINECRAFT.otf', 70)
 fontdied = pygame.font.Font('MINECRAFT.otf', 100)
 fontspace = pygame.font.Font('MINECRAFT.otf', 40)
 
+speed = int(input("speed: "))
+cells = int(input("cells: "))
+print("Press 'alt + tab'")
+time.sleep(5)
 
 def draw_rect_alpha(surface, color, rect):
     shape_surf = pygame.Surface(pygame.Rect(rect).size, pygame.SRCALPHA)
@@ -26,9 +30,7 @@ while True:
     old_direction = (0,1)
 
     clock = pygame.time.Clock()
-    speed = 50
     score = 0
-    cells = 3
     max_len = cells*cells
     apple = [random.randint(0,cells-1),random.randint(0,cells-1)]
     snake = [[1,1]]
@@ -118,10 +120,10 @@ while True:
         text = font.render(f'score: {score}; {highscore_str}', True, (255,255,255))
         text_rect = text.get_rect()
         screen.blit(text,((screen_size[0]-text_rect.width)/2,screen_size[1]+(y_offset-text_rect.height)/2))
-
         if keys[pygame.K_ESCAPE]:
             pygame.quit()
             exit()
+
         pygame.display.flip()
 
     print(f"your score is {score}")
@@ -144,9 +146,12 @@ while True:
     text = font.render(f'score: {score}; {highscore_str}', True, (255,255,255))
     text_rect = text.get_rect()
     screen.blit(text,((screen_size[0]-text_rect.width)/2,500))
-    text = fontspace.render(f'Press Backspace', True, (255,255,255))
+    text = fontspace.render(f'Press Backspace to start new game', True, (255,255,255))
     text_rect = text.get_rect()
     screen.blit(text,((screen_size[0]-text_rect.width)/2,600))
+    text = fontspace.render(f'or Press ESC to leave the game', True, (255,255,255))
+    text_rect = text.get_rect()
+    screen.blit(text,((screen_size[0]-text_rect.width)/2,700))
     pygame.display.flip()
     while True:
         pygame.event.pump()
@@ -154,3 +159,6 @@ while True:
         keys = pygame.key.get_pressed()
         if keys[pygame.K_BACKSPACE]:
             break
+        if keys[pygame.K_ESCAPE]:
+            pygame.quit()
+            exit()
