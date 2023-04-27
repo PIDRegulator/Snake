@@ -3,13 +3,16 @@ import random
 import time
 
 pygame.init()
-screen_size = (800,800) #sets screen size for the game without score
-y_offset = 100 # sets screen size offset for the text at the bottom
+pygame.display.set_caption("Snake")
+screen_size_pixels = 850
+font_multiplier = screen_size_pixels/1000
+screen_size = (screen_size_pixels, screen_size_pixels) #sets screen size for the game without score
+y_offset = 100*font_multiplier # sets screen size offset for the text at the bottom
 screen = pygame.display.set_mode((screen_size[0],screen_size[1]+y_offset)) #calculates the screen size form the offset and the board sizes
 
-font = pygame.font.Font('MINECRAFT.otf', 70) #sets font sizes for the score and win/lose menu
-fontdied = pygame.font.Font('MINECRAFT.otf', 100)
-fontspace = pygame.font.Font('MINECRAFT.otf', 40)
+font = pygame.font.Font('MINECRAFT.otf', int(70*font_multiplier)) #sets font sizes for the score and win/lose menu
+fontdied = pygame.font.Font('MINECRAFT.otf', int(100*font_multiplier))
+fontspace = pygame.font.Font('MINECRAFT.otf', int(40*font_multiplier))
 
 speed = int(input("speed: ")) #takes speed input from console 
 cells = int(input("cells: ")) #takes number of cells in one row from console
