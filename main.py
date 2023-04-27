@@ -66,16 +66,16 @@ while True: #Main loop to  reset the game
 
         screen.fill((46, 92, 43)) #fills score background
         keys = pygame.key.get_pressed() #finds which direction it goes using WASD
-        if keys[pygame.K_w]:
+        if keys[pygame.K_UP] or keys[pygame.K_w]:
             direction = (-1,0)
 
-        if keys[pygame.K_s]:
+        if keys[pygame.K_DOWN] or keys[pygame.K_s]:
             direction = (1,0)
 
-        if keys[pygame.K_a]:
+        if keys[pygame.K_LEFT] or keys[pygame.K_a]:
             direction = (0,-1)
 
-        if keys[pygame.K_d]:
+        if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             direction = (0,1)
 
         if old_direction != direction and old_direction[0] + direction[0] == 0: #locks turning 180 degrees at once
