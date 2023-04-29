@@ -4,7 +4,7 @@ import time
 
 pygame.init()
 pygame.display.set_caption("Snake")
-screen_size_pixels = 850
+screen_size_pixels = 1000
 font_multiplier = screen_size_pixels/1000
 screen_size = (screen_size_pixels, screen_size_pixels) #sets screen size for the game without score
 y_offset = 100*font_multiplier # sets screen size offset for the text at the bottom
@@ -23,7 +23,6 @@ time.sleep(5)
 #     shape_surf = pygame.Surface(pygame.Rect(rect).size, pygame.SRCALPHA)
 #     pygame.draw.rect(shape_surf, color, shape_surf.get_rect())
 #     surface.blit(shape_surf, rect)
-
 
 while True: #Main loop to  reset the game
     win = False
@@ -53,12 +52,11 @@ while True: #Main loop to  reset the game
     else:
         highscore_str = ""
 
-
     running = True #sets game to run
     movecount = speed
     
     while running: #loop for the game to run
-        clock.tick(60) #fps 
+        clock.tick(120) #fps 
         framerate = clock.get_fps()
         for event in pygame.event.get(): #enables quitting easily
             if event.type == pygame.QUIT:
@@ -117,7 +115,6 @@ while True: #Main loop to  reset the game
         else:
             movecount -= 1
         
-
         screen.blit(background,(0,0))
         pygame.draw.rect(screen,[227, 7, 14],[apple[1]*cell_size,apple[0]*cell_size,cell_size,cell_size])
         for i,body in enumerate(snake[:-1]):
