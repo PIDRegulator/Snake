@@ -54,7 +54,7 @@ Pokud něco nefunguje jděte na:
 3. Zapněte Visual Studio Code a vlevo nahoře klikněte na kolonku *File* nebo zmáčkněte *Ctrl+K Ctrl+O*
 4. Klikněte na Open Folder a vyberte složku do které jste uložili soubor z githubu a potvrďte
 ## Jak hru používat
-### Seznam bodů ###
+### Seznam bodů 
 	- Kontrola highscore
 	- Nastavení velikosti okna
 	- Nastavení parametrů hry
@@ -79,7 +79,49 @@ Pokud něco nefunguje jděte na:
 9. Po potvrzení velikosti okna se spustí odpočet 5 sekund. Znovu zmáčkněte *alt+Tab* nebo překlikněte zpět do okna, které vám na začátku vyskočilo. Po uběhlých 5 sekundách se hra spustí.
 
 **Ovládání hry** 
+- Po zapnutí hry se had automaticky rozjede doprava. 
+- Ovládat  se dá dvěma způsoby.
+	- W, S, A, D
+		- W - Nahoru
+		- S - Dolu
+		- A - Doleva
+		- D - Doprava
+	- Šipky
+		- Podle směru šipky
+- Kdykoli v průběhu hry se dá odejít pomocí zmáčknutí klávesy *esc*
+- Po prohrání/vyhrání se pokus opakuje po zmáčknutí *Backspace*
 
+**Ukončení hry**
+- Po ukončení hry se highscore ukládá pro další pokusy.
+- Pokud chcete highscore smazat/upravit v souboru *highscore.txt*
 
 
 ## Vysvětlení kódu
+### Nastavení hlavních parametrů
+`screen_size_pixels = 900` 
+Nastavení velikosti obrazu hry v pixelech
+
+`font_multiplier = screen_size_pixels/1000`
+Vydělí velikost okna, tak aby se velikost písma poupravila
+
+`screen_size = (screen_size_pixels, screen_size_pixels)`
+Nastaví velikost okna, aby to vždy byl čtverec a stačilo zadat rozměr jen jednou
+
+`y_offset = 100*font_multiplier`
+Nastaví spodní odrážku pro výpis *score* podle velikosti okna
+
+`screen = pygame.display.set_mode((screen_size[0],screen_size[1]+y_offset))`
+Dopočítá velikost okna i s odrážkou
+
+`font = pygame.font.Font('MINECRAFT.otf', int(70*font_multiplier))`
+`fontdied = pygame.font.Font('MINECRAFT.otf', int(100*font_multiplier))`
+`fontspace = pygame.font.Font('MINECRAFT.otf', int(40*font_multiplier))`
+Spočítá všechny velikosti fontů, tak aby se při *Death screenu* velikosti mohli lišit
+
+`speed = int(input("speed: ")) `
+`cells = int(input("cells: "))`
+`print("Press 'alt + tab'")` 
+`time.sleep(5)`
+Vezme vstupy od uživatele pro rychlost hada a počet políček. Naviguje jak postupovat dál a čeká 5 sekund než se spustí hra.
+
+
