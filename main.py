@@ -4,66 +4,63 @@ import time
 
 pygame.init()
 pygame.display.set_caption("Snake")
-screen_size_pixels = 1000
-font_multiplier = screen_size_pixels/1000
-screen_size = (screen_size_pixels, screen_size_pixels) #sets screen size for the game without score
-y_offset = 100*font_multiplier # sets screen size offset for the text at the bottom
-screen = pygame.display.set_mode((screen_size[0],screen_size[1]+y_offset)) #calculates the screen size form the offset and the board sizes
 
-font = pygame.font.Font('MINECRAFT.otf', int(70*font_multiplier)) #sets font sizes for the score and win/lose menu
+screen_size_pixels = 900
+
+font_multiplier = screen_size_pixels/1000
+screen_size = (screen_size_pixels, screen_size_pixels) 
+y_offset = 100*font_multiplier 
+screen = pygame.display.set_mode((screen_size[0],screen_size[1]+y_offset)) 
+
+font = pygame.font.Font('MINECRAFT.otf', int(70*font_multiplier)) 
 fontdied = pygame.font.Font('MINECRAFT.otf', int(100*font_multiplier))
 fontspace = pygame.font.Font('MINECRAFT.otf', int(40*font_multiplier))
 
-speed = int(input("speed: ")) #takes speed input from console 
-cells = int(input("cells: ")) #takes number of cells in one row from console
-print("Press 'alt + tab'") #navigates yout o what to
+speed = int(input("speed: ")) 
+cells = int(input("cells: ")) 
+print("Press 'alt + tab'") 
 time.sleep(5)
 
-# def draw_rect_alpha(surface, color, rect):
-#     shape_surf = pygame.Surface(pygame.Rect(rect).size, pygame.SRCALPHA)
-#     pygame.draw.rect(shape_surf, color, shape_surf.get_rect())
-#     surface.blit(shape_surf, rect)
-
-while True: #Main loop to  reset the game
+while True: 
     win = False
-    pygame.display.flip() #resets display 
+    pygame.display.flip() 
 
-    direction = (0,1) #sets directions to right
+    direction = (0,1) 
     old_direction = (0,1)
 
-    clock = pygame.time.Clock() #sets clock
-    score = 0 #score to 0
-    max_len = cells*cells #sets winning lenght of the snake by multiplying board size
-    apple = [random.randint(0,cells-1),random.randint(0,cells-1)] #sets where apples can spawn
-    snake = [[1,1]] #sets snake spawnpoint
-    cell_size = screen_size[0]/cells #divides how many pixels every cell is
+    clock = pygame.time.Clock() 
+    score = 0 
+    max_len = cells*cells 
+    apple = [random.randint(0,cells-1),random.randint(0,cells-1)] 
+    snake = [[1,1]] 
+    cell_size = screen_size[0]/cells 
 
-    background = pygame.Surface(screen_size) #backround size
-    background.fill((6, 189, 36)) #board color
-    for y in range(cells): #makes checkerboard pattern on board
+    background = pygame.Surface(screen_size) 
+    background.fill((6, 189, 36)) 
+    for y in range(cells): 
         for x in range(cells):
             if (x+y) % 2 == 0:
                 pygame.draw.rect(background,[17, 140, 37],[x*cell_size,y*cell_size,cell_size,cell_size])
                     
-    f = open("highscore.txt","r") #reads highscore from file
+    f = open("highscore.txt","r") 
     highs = int(f.read().splitlines()[0])
     if highs > 0:
         highscore_str = f"highscore: {highs}"
     else:
         highscore_str = ""
 
-    running = True #sets game to run
+    running = True 
     movecount = speed
     
-    while running: #loop for the game to run
-        clock.tick(120) #fps 
+    while running: 
+        clock.tick(120) 
         framerate = clock.get_fps()
-        for event in pygame.event.get(): #enables quitting easily
+        for event in pygame.event.get(): 
             if event.type == pygame.QUIT:
                 running = False
 
-        screen.fill((46, 92, 43)) #fills score background
-        keys = pygame.key.get_pressed() #finds which direction it goes using WASD
+        screen.fill((46, 92, 43)) 
+        keys = pygame.key.get_pressed() 
         if keys[pygame.K_UP] or keys[pygame.K_w]:
             direction = (-1,0)
 
@@ -76,25 +73,25 @@ while True: #Main loop to  reset the game
         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             direction = (0,1)
 
-        if old_direction != direction and old_direction[0] + direction[0] == 0: #locks turning 180 degrees at once
+        if old_direction != direction and old_direction[0] + direction[0] == 0: 
             direction = old_direction
 
-        if movecount ==0: #snake movement
+        if movecount ==0: 
             old_direction = direction 
             new_y = snake[-1][0] + direction[0]
             new_x = snake[-1][1] + direction[1]
             new_body = [new_y,new_x] 
 
-            if snake[-1][0] >= cells or snake[-1][1] >= cells: #snake collision 
+            if snake[-1][0] >= cells or snake[-1][1] >= cells: 
                 running = False
                 continue
 
-            if snake[-1][0] < 0 or snake[-1][1] < 0: #snake collision into wall
+            if snake[-1][0] < 0 or snake[-1][1] < 0: 
                 running = False
                 continue
                 
-            if apple == new_body: #checks if apple is anywhere in snake
-                score += 1 #adds score
+            if apple == new_body: 
+                score += 1 
                 if len(snake)+1>=max_len:
                     running = False
                     win = True
@@ -149,12 +146,15 @@ while True: #Main loop to  reset the game
     text_rect = text.get_rect()
     screen.blit(text,((screen_size[0]-text_rect.width)/2,400))
     text = font.render(f'score: {score}; {highscore_str}', True, (255,255,255))
+
     text_rect = text.get_rect()
     screen.blit(text,((screen_size[0]-text_rect.width)/2,500))
     text = fontspace.render(f'Press Backspace to start new game', True, (255,255,255))
+
     text_rect = text.get_rect()
     screen.blit(text,((screen_size[0]-text_rect.width)/2,600))
     text = fontspace.render(f'or Press ESC to leave the game', True, (255,255,255))
+    
     text_rect = text.get_rect()
     screen.blit(text,((screen_size[0]-text_rect.width)/2,700))
     pygame.display.flip()
