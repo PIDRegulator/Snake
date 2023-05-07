@@ -98,181 +98,181 @@ Pokud něco nefunguje jděte na:
 
 ## Vysvětlení kódu
 ### Nastavení hlavních parametrů
-`screen_size_pixels = 900` 
-Nastavení velikosti obrazu hry v pixelech
+<br>`screen_size_pixels = 900` 
+<br>Nastavení velikosti obrazu hry v pixelech
 
-`font_multiplier = screen_size_pixels/1000`
-Vydělí velikost okna, tak aby se velikost písma poupravila
+<br>`font_multiplier = screen_size_pixels/1000`
+<br>Vydělí velikost okna, tak aby se velikost písma poupravila
 
-`screen_size = (screen_size_pixels, screen_size_pixels)`
-Nastaví velikost okna, aby to vždy byl čtverec a stačilo zadat rozměr jen jednou
+<br>`screen_size = (screen_size_pixels, screen_size_pixels)`
+<br>Nastaví velikost okna, aby to vždy byl čtverec a stačilo zadat rozměr jen jednou
 
-`y_offset = 100*font_multiplier`
-Nastaví spodní odrážku pro výpis *score* podle velikosti okna
+<br>`y_offset = 100*font_multiplier`
+<br>Nastaví spodní odrážku pro výpis *score* podle velikosti okna
 
-`screen = pygame.display.set_mode((screen_size[0],screen_size[1]+y_offset))`
-Dopočítá velikost okna i s odrážkou
+<br>`screen = pygame.display.set_mode((screen_size[0],screen_size[1]+y_offset))`
+<br>Dopočítá velikost okna i s odrážkou
 
-`font = pygame.font.Font('MINECRAFT.otf', int(70*font_multiplier))`
-`fontdied = pygame.font.Font('MINECRAFT.otf', int(100*font_multiplier))`
-`fontspace = pygame.font.Font('MINECRAFT.otf', int(40*font_multiplier))`
-Spočítá všechny velikosti fontů, tak aby se při *Death screenu* velikosti mohli lišit
+<br>`font = pygame.font.Font('MINECRAFT.otf', int(70*font_multiplier))`
+<br>`fontdied = pygame.font.Font('MINECRAFT.otf', int(100*font_multiplier))`
+<br>`fontspace = pygame.font.Font('MINECRAFT.otf', int(40*font_multiplier))`
+<br>Spočítá všechny velikosti fontů, tak aby se při *Death screenu* velikosti mohli lišit
 
-`speed = int(input("speed: ")) `
-`cells = int(input("cells: "))`
-`print("Press 'alt + tab'")` 
-`time.sleep(5)`
+<br>`speed = int(input("speed: ")) `
+<br>`cells = int(input("cells: "))`
+<br>`print("Press 'alt + tab'")` 
+<br>`time.sleep(5)`
 
 ### Hlavní cyklus pro opakování hry 
 Vezme vstupy od uživatele pro rychlost hada a počet políček. Naviguje jak postupovat dál a čeká 5 sekund než se spustí hra.
 
-`direction = (0,1)`
-`old_direction = (0,1)`
-Nastaví směr doprava
+<br>`direction = (0,1)`
+<br>`old_direction = (0,1)`
+<br>Nastaví směr doprava
 
-`clock = pygame.time.Clock()`
-Nastaví proměnnou, aby se dále jednodušeji dalo nastavovat jak často se obrazovka bude obnovovat
+<br>`clock = pygame.time.Clock()`
+<br>Nastaví proměnnou, aby se dále jednodušeji dalo nastavovat jak často se obrazovka bude obnovovat
 
-`score = 0`
-Vyresetuje score
+<br>`score = 0`
+<br>Vyresetuje score
 
-`max_len = cells*cells`
-Spočítá jak dlouhý musí být had, aby hráč danou hru vyhrál
+<br>`max_len = cells*cells`
+<br>Spočítá jak dlouhý musí být had, aby hráč danou hru vyhrál
 
-`apple = [random.randint(0,cells-1),random.randint(0,cells-1)]`
-Vygeneruje náhodnou pozici jablka pro začátek hry
+<br>`apple = [random.randint(0,cells-1),random.randint(0,cells-1)]`
+<br>Vygeneruje náhodnou pozici jablka pro začátek hry
 
-`snake = [[1,1]]`
-Nastaví první pozici hada doprava nahoru jedno políčko od obou stěn.
+<br>`snake = [[1,1]]`
+<br>Nastaví první pozici hada doprava nahoru jedno políčko od obou stěn.
 
-`cell_size = screen_size[0]/cells`
-Spočítá jak velké bude každé políčko podle velikosti desky a počtu políček zadaným hráčem
+<br>`cell_size = screen_size[0]/cells`
+<br>Spočítá jak velké bude každé políčko podle velikosti desky a počtu políček zadaným hráčem
 
-`background = pygame.Surface(screen_size)`
-`background.fill((6, 189, 36))`
-Vybarví herní plochu
+<br>`background = pygame.Surface(screen_size)`
+<br>`background.fill((6, 189, 36))`
+<br>Vybarví herní plochu
 
-`for y in  range(cells):`
-&nbsp;&nbsp;&nbsp;&nbsp;`for x in  range(cells):`
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`if (x+y) % 2  ==  0:`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`pygame.draw.rect(background,[17, 140, 37],			[x*cell_size,y*cell_size,cell_size,cell_size])`
-Spočítá a vykreslí, kde mají být políčka jiné barvy pro vytvoření šachovnice
+<br>`for y in  range(cells):`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`for x in  range(cells):`
+<br>	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`if (x+y) % 2  ==  0:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`pygame.draw.rect(background,[17, 140, 37],			[x*cell_size,y*cell_size,cell_size,cell_size])`
+<br>Spočítá a vykreslí, kde mají být políčka jiné barvy pro vytvoření šachovnice
 
-`f = open("highscore.txt","r")`
-`highs = int(f.read().splitlines()[0])`
-`if highs >  0:`
-&nbsp;&nbsp;&nbsp;&nbsp;`highscore_str = f"highscore: {highs}"`
-`else:`
-&nbsp;&nbsp;&nbsp;&nbsp;`highscore_str = ""`
-najde *highscore* v souboru a zjistí pokud je větší než nula.
+<br>`f = open("highscore.txt","r")`
+<br>`highs = int(f.read().splitlines()[0])`
+<br>`if highs >  0:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`highscore_str = f"highscore: {highs}"`
+<br>`else:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`highscore_str = ""`
+<br>najde *highscore* v souboru a zjistí pokud je větší než nula.
 
-`running = True`
-`movecount = speed`
-Nastaví další proměnné pro běh cyklu hry a rychlosti
+<br>`running = True`
+<br>`movecount = speed`
+<br>Nastaví další proměnné pro běh cyklu hry a rychlosti
 
 ### Cyklus jednotlivých pokusů
 
-`clock.tick(120)`
-Nastaví kolikrát za sekundu se obrazovka obnoví
+<br>`clock.tick(120)`
+<br>Nastaví kolikrát za sekundu se obrazovka obnoví
 
-`framerate = clock.get_fps()`
-`for event in pygame.event.get():`
-&nbsp;&nbsp;&nbsp;&nbsp;`if event.type == pygame.QUIT:`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`running = False`
-Zajistí aby se dalo ze hry odejít aniž by hra crashovala
+<br>`framerate = clock.get_fps()`
+<br>`for event in pygame.event.get():`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`if event.type == pygame.QUIT:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`running = False`
+<br>Zajistí aby se dalo ze hry odejít aniž by hra crashovala
 
-`keys = pygame.key.get_pressed()`
-`if keys[pygame.K_UP] or keys[pygame.K_w]:`
-&nbsp;&nbsp;&nbsp;&nbsp;`direction = (-1,0)`
+<br>`keys = pygame.key.get_pressed()`
+<br>`if keys[pygame.K_UP] or keys[pygame.K_w]:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`direction = (-1,0)`
 
-`if keys[pygame.K_DOWN] or keys[pygame.K_s]:`
-&nbsp;&nbsp;&nbsp;&nbsp;`direction = (1,0)`
+<br>`if keys[pygame.K_DOWN] or keys[pygame.K_s]:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`direction = (1,0)`
 
-`if keys[pygame.K_LEFT] or keys[pygame.K_a]:`
-&nbsp;&nbsp;&nbsp;&nbsp;`direction = (0,-1)`
+<br>`if keys[pygame.K_LEFT] or keys[pygame.K_a]:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`direction = (0,-1)`
 
-`if keys[pygame.K_RIGHT] or keys[pygame.K_d]:`
-&nbsp;&nbsp;&nbsp;&nbsp;`direction = (0,1)`
-Bere vstup z klávesnice a mění podle toho směr jízdy hada.
+<br>`if keys[pygame.K_RIGHT] or keys[pygame.K_d]:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`direction = (0,1)`
+<br>Bere vstup z klávesnice a mění podle toho směr jízdy hada.
 
-`if old_direction != direction and old_direction[0] + direction[0] ==  0:`
-&nbsp;&nbsp;&nbsp;&nbsp;`direction = old_direction`
-Znemožní otočit hada o 180° na jednou.
+<br>`if old_direction != direction and old_direction[0] + direction[0] ==  0:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`direction = old_direction`
+<br>Znemožní otočit hada o 180° na jednou.
 
-`if movecount ==0:`
-&nbsp;&nbsp;&nbsp;&nbsp;`old_direction = direction`
-&nbsp;&nbsp;&nbsp;&nbsp;`new_y = snake[-1][0] + direction[0]`
-&nbsp;&nbsp;&nbsp;&nbsp;`new_x = snake[-1][1] + direction[1]`
-&nbsp;&nbsp;&nbsp;&nbsp;`new_body = [new_y,new_x]`
-Posune hada po uběhlém čase nastaveném před zapnutím hry.
+<br>`if movecount ==0:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`old_direction = direction`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`new_y = snake[-1][0] + direction[0]`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`new_x = snake[-1][1] + direction[1]`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`new_body = [new_y,new_x]`
+<br>Posune hada po uběhlém čase nastaveném před zapnutím hry.
 
-`if snake[-1][0] >= cells or snake[-1][1] >= cells:`
-&nbsp;&nbsp;&nbsp;&nbsp;`running = False`
-&nbsp;&nbsp;&nbsp;&nbsp;`continue`
+<br>`if snake[-1][0] >= cells or snake[-1][1] >= cells:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`running = False`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`continue`
 
-`if snake[-1][0] <  0  or snake[-1][1] <  0:`
-&nbsp;&nbsp;&nbsp;&nbsp;`running = False`
-&nbsp;&nbsp;&nbsp;&nbsp;`continue`
-Zjistí pokud had je mimo hrací plochu. Pokud ano hru přeruší.
+<br>`if snake[-1][0] <  0  or snake[-1][1] <  0:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`running = False`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`continue`
+<br>Zjistí pokud had je mimo hrací plochu. Pokud ano hru přeruší.
 
-`if apple == new_body:`
-&nbsp;&nbsp;&nbsp;&nbsp;`score += 1`
-&nbsp;&nbsp;&nbsp;&nbsp;`!if  len(snake)+1>=max_len:`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`running = False`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`win = True`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`print("you won")`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`continue`
-&nbsp;&nbsp;&nbsp;&nbsp;`else:`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`while apple in snake+[new_body]:`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`apple = [random.randint(0,cells-1),random.randint(0,cells-1)]`
-`else:`
-&nbsp;&nbsp;&nbsp;&nbsp;`snake.pop(0)`
-`if new_body in snake:`
-&nbsp;&nbsp;&nbsp;&nbsp;`running = False`
-&nbsp;&nbsp;&nbsp;&nbsp;`continue`
-&nbsp;&nbsp;&nbsp;&nbsp;`snake.append(new_body)`
-&nbsp;&nbsp;&nbsp;&nbsp;`movecount = speed`
-Připočte bod pokud had snědl jablko. 
-Ukončí hru pokud had dosáhl maximální délky podle velikosti hracího pole a zaručí s´že se ukáže *win screen* místo *death screen*.
-Přidá nové jablko pokud had nedosáhl maximální délky.
-Zničí poslední políčko těla hada.
-Zajistí že hra se vypne pokud had nabourá sám do sebe.
+<br>`if apple == new_body:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`score += 1`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`!if  len(snake)+1>=max_len:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`running = False`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`win = True`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`print("you won")`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`continue`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`else:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`while apple in snake+[new_body]:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`apple = [random.randint(0,cells-<br>1),random.randint(0,cells-1)]`
+<br>`else:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`snake.pop(0)`
+<br>`if new_body in snake:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`running = False`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`continue`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`snake.append(new_body)`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`movecount = speed`
+<br>Připočte bod pokud had snědl jablko. 
+<br>Ukončí hru pokud had dosáhl maximální délky podle velikosti hracího pole a zaručí s´že se ukáže <br>*win screen* místo *death screen*.
+<br>Přidá nové jablko pokud had nedosáhl maximální délky.
+<br>Zničí poslední políčko těla hada.
+<br>Zajistí že hra se vypne pokud had nabourá sám do sebe.
 
-`else:`
-&nbsp;&nbsp;&nbsp;&nbsp;`movecount -= 1`
-Odečte jedna od počtu uběhlých snímků za poslední sekundu aby se cyklus opakoval správně.
+<br>`else:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`movecount -= 1`
+<br>Odečte jedna od počtu uběhlých snímků za poslední sekundu aby se cyklus opakoval správně.
 
-`screen.blit(background,(0,0))`
-`pygame.draw.rect(screen,[227, 7, 14],[apple[1]*cell_size,apple[0]*cell_size,cell_size,cell_size]`
-`for i,body in  enumerate(snake[:-1]):`
-&nbsp;&nbsp;&nbsp;&nbsp;`color = abs(255-(255/len(snake)*i))`
-&nbsp;&nbsp;&nbsp;&nbsp;`pygame.draw.rect(screen,[0,0,color],&nbsp;&nbsp;&nbsp;&nbsp;[body[1]*cell_size,body[0]*cell_size,cell_size,cell_size])`
-&nbsp;&nbsp;&nbsp;&nbsp;`pygame.draw.rect(screen,[0, 0, 0],[snake[-1][1]*cell_size,snake[-1][0]*cell_size,cell_size,cell_size])`
-Vykreslí jablko a hada
+<br>`screen.blit(background,(0,0))`
+<br>`pygame.draw.rect(screen,[227, 7, 14],[apple[1]*cell_size,apple[0]*cell_size,cell_size,cell_size]`
+<br>`for i,body in  enumerate(snake[:-1]):`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`color = abs(255-(255/len(snake)*i))`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`pygame.draw.rect(screen,[0,0,color],&nbsp;&nbsp;&nbsp;&nbsp;[body[1]*cell_size,body[0]*cell_size,cell_size,cell_size])`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`pygame.draw.rect(screen,[0, 0, 0],[snake[-1][1]*cell_size,snake[-1][0]*cell_size,cell_size,cell_size])`
+<br>Vykreslí jablko a hada
 
-`text = font.render(f'score: {score}; {highscore_str}', True, (255,255,255))`
-`text_rect = text.get_rect()`
-`screen.blit(text,((screen_size[0]-text_rect.width)/2,screen_size[1]+(y_offset-text_rect.height)/2))`
-Vypíše na spodku okna *score* a *highscore*
+<br>`text = font.render(f'score: {score}; {highscore_str}', True, (255,255,255))`
+<br>`text_rect = text.get_rect()`
+<br>`screen.blit(text,((screen_size[0]-text_rect.width)/2,screen_size[1]+(y_offset-text_rect.height)/2))`
+<br>Vypíše na spodku okna *score* a *highscore*
 
-`if keys[pygame.K_ESCAPE]:`
-&nbsp;&nbsp;&nbsp;&nbsp;`pygame.quit()`
-&nbsp;&nbsp;&nbsp;&nbsp;`exit()`
-Dovolí hráčovi odejít jen pomocí *esc*
+<br>`if keys[pygame.K_ESCAPE]:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`pygame.quit()`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`exit()`
+<br>Dovolí hráčovi odejít jen pomocí *esc*
 
-`pygame.display.flip()`
-Načte znovu obrazovku aby se zobrazil aktuální snímek.
+<br>`pygame.display.flip()`
+<br>Načte znovu obrazovku aby se zobrazil aktuální snímek.
 
-`print(f"your score is {score}")`
-Vypíše skóre do konsole
+<br>`print(f"your score is {score}")`
+<br>Vypíše skóre do konsole
 
-`f = open("highscore.txt","r")`
-`highs = int(f.read().splitlines()[0])`
-`if score > highs:`
-&nbsp;&nbsp;&nbsp;&nbsp;`f = open("highscore.txt","w")`
-&nbsp;&nbsp;&nbsp;&nbsp;`f.write(str(score))`
-&nbsp;&nbsp;&nbsp;&nbsp;`f.close()`
-Přečte *highscore* z dokumentu a uloží nové pokud je větší než minulé.
+<br>`f = open("highscore.txt","r")`
+<br>`highs = int(f.read().splitlines()[0])`
+<br>`if score > highs:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`f = open("highscore.txt","w")`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`f.write(str(score))`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`f.close()`
+<br>Přečte *highscore* z dokumentu a uloží nové pokud je větší než minulé.
 
 <br>`screen.fill((255, 0, 0))`
 <br>`if win:`
