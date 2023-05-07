@@ -274,41 +274,41 @@ Vypíše skóre do konsole
 &nbsp;&nbsp;&nbsp;&nbsp;`f.close()`
 Přečte *highscore* z dokumentu a uloží nové pokud je větší než minulé.
 
-`screen.fill((255, 0, 0))`
-`if win:`
-&nbsp;&nbsp;&nbsp;&nbsp;`screen.fill((0, 255, 0))`
-`text = fontdied.render(f'YOU DIED', True, (255,255,255))`
-`if win:`
-&nbsp;&nbsp;&nbsp;&nbsp;`text = fontdied.render(f'YOU WON', True, (255,255,255))`
-Vybarví obrazovku červenou nebo zelenou podle toho jestli hráč vyhrál a zobrazý daný text.
+<br>`screen.fill((255, 0, 0))`
+<br>`if win:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`screen.fill((0, 255, 0))`
+<br>`text = fontdied.render(f'YOU DIED', True, (255,255,255))`
+<br>`if win:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`text = fontdied.render(f'YOU WON', True, (255,255,255))`
+<br>Vybarví obrazovku červenou nebo zelenou podle toho jestli hráč vyhrál a zobrazý daný text.
 
-`text_rect = text.get_rect()`
-`screen.blit(text,((screen_size[0]-text_rect.width)/2,400))`
-`text = font.render(f'score: {score}; {highscore_str}', True, (255,255,255))`
+<br>`text_rect = text.get_rect()`
+<br>`screen.blit(text,((screen_size[0]-text_rect.width)/2,400))`
+<br>`text = font.render(f'score: {score}; {highscore_str}', True, (255,255,255))`
 
-`text_rect = text.get_rect()`
-`screen.blit(text,((screen_size[0]-text_rect.width)/2,500))`
-`text = fontspace.render(f'Press Backspace to start new game', True, (255,255,255))`
+<br>`text_rect = text.get_rect()`
+<br>`screen.blit(text,((screen_size[0]-text_rect.width)/2,500))`
+<br>`text = fontspace.render(f'Press Backspace to start new game', True, (255,255,255))`
 
-`text_rect = text.get_rect()`
-`screen.blit(text,((screen_size[0]-text_rect.width)/2,600))`
-`text = fontspace.render(f'or Press ESC to leave the game', True, (255,255,255))`
+<br>`text_rect = text.get_rect()`
+<br>`screen.blit(text,((screen_size[0]-text_rect.width)/2,600))`
+<br>`text = fontspace.render(f'or Press ESC to leave the game', True, (255,255,255))`
 
-`text_rect = text.get_rect()`
-`screen.blit(text,((screen_size[0]-text_rect.width)/2,700))`
-`pygame.display.flip()`
-Vypíše instrukce pro další pokračování ve hře.
+<br>`text_rect = text.get_rect()`
+<br>`screen.blit(text,((screen_size[0]-text_rect.width)/2,700))`
+<br>`pygame.display.flip()`
+<br>Vypíše instrukce pro další pokračování ve hře.
 
-`while  True:`
-&nbsp;&nbsp;&nbsp;&nbsp;`pygame.event.pump()`
-&nbsp;&nbsp;&nbsp;&nbsp;`keys = pygame.key.get_pressed()`
-&nbsp;&nbsp;&nbsp;&nbsp;`if keys[pygame.K_BACKSPACE]:`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`break`
-&nbsp;&nbsp;&nbsp;&nbsp;`if keys[pygame.K_ESCAPE]:`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`pygame.quit()`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`exit()`
-Umožní pustit další hru pomocí *backspace*, nebo zavřít celé okno pomocí *esc*
+<br>`while  True:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`pygame.event.pump()`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`keys = pygame.key.get_pressed()`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`if keys[pygame.K_BACKSPACE]:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`break`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;`if keys[pygame.K_ESCAPE]:`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`pygame.quit()`
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`exit()`
+<br>Umožní pustit další hru pomocí *backspace*, nebo zavřít celé okno pomocí *esc*
 
 ## Credits
-František Václavek - pomoc s kódem
-Robert Hunter Shea - pomoc s kódem
+<br>František Václavek - pomoc s kódem
+<br>Robert Hunter Shea - pomoc s kódem
