@@ -237,3 +237,78 @@ Ukončí hru pokud had dosáhl maximální délky podle velikosti hracího pole 
 Přidá nové jablko pokud had nedosáhl maximální délky.
 Zničí poslední políčko těla hada.
 Zajistí že hra se vypne pokud had nabourá sám do sebe.
+
+`else:`
+&nbsp;&nbsp;&nbsp;&nbsp;`movecount -= 1`
+Odečte jedna od počtu uběhlých snímků za poslední sekundu aby se cyklus opakoval správně.
+
+`screen.blit(background,(0,0))`
+`pygame.draw.rect(screen,[227, 7, 14],[apple[1]*cell_size,apple[0]*cell_size,cell_size,cell_size]`
+`for i,body in  enumerate(snake[:-1]):`
+&nbsp;&nbsp;&nbsp;&nbsp;`color = abs(255-(255/len(snake)*i))`
+&nbsp;&nbsp;&nbsp;&nbsp;`pygame.draw.rect(screen,[0,0,color],&nbsp;&nbsp;&nbsp;&nbsp;[body[1]*cell_size,body[0]*cell_size,cell_size,cell_size])`
+&nbsp;&nbsp;&nbsp;&nbsp;`pygame.draw.rect(screen,[0, 0, 0],[snake[-1][1]*cell_size,snake[-1][0]*cell_size,cell_size,cell_size])`
+Vykreslí jablko a hada
+
+`text = font.render(f'score: {score}; {highscore_str}', True, (255,255,255))`
+`text_rect = text.get_rect()`
+`screen.blit(text,((screen_size[0]-text_rect.width)/2,screen_size[1]+(y_offset-text_rect.height)/2))`
+Vypíše na spodku okna *score* a *highscore*
+
+`if keys[pygame.K_ESCAPE]:`
+&nbsp;&nbsp;&nbsp;&nbsp;`pygame.quit()`
+&nbsp;&nbsp;&nbsp;&nbsp;`exit()`
+Dovolí hráčovi odejít jen pomocí *esc*
+
+`pygame.display.flip()`
+Načte znovu obrazovku aby se zobrazil aktuální snímek.
+
+`print(f"your score is {score}")`
+Vypíše skóre do konsole
+
+`f = open("highscore.txt","r")`
+`highs = int(f.read().splitlines()[0])`
+`if score > highs:`
+&nbsp;&nbsp;&nbsp;&nbsp;`f = open("highscore.txt","w")`
+&nbsp;&nbsp;&nbsp;&nbsp;`f.write(str(score))`
+&nbsp;&nbsp;&nbsp;&nbsp;`f.close()`
+Přečte *highscore* z dokumentu a uloží nové pokud je větší než minulé.
+
+`screen.fill((255, 0, 0))`
+`if win:`
+&nbsp;&nbsp;&nbsp;&nbsp;`screen.fill((0, 255, 0))`
+`text = fontdied.render(f'YOU DIED', True, (255,255,255))`
+`if win:`
+&nbsp;&nbsp;&nbsp;&nbsp;`text = fontdied.render(f'YOU WON', True, (255,255,255))`
+Vybarví obrazovku červenou nebo zelenou podle toho jestli hráč vyhrál a zobrazý daný text.
+
+`text_rect = text.get_rect()`
+`screen.blit(text,((screen_size[0]-text_rect.width)/2,400))`
+`text = font.render(f'score: {score}; {highscore_str}', True, (255,255,255))`
+
+`text_rect = text.get_rect()`
+`screen.blit(text,((screen_size[0]-text_rect.width)/2,500))`
+`text = fontspace.render(f'Press Backspace to start new game', True, (255,255,255))`
+
+`text_rect = text.get_rect()`
+`screen.blit(text,((screen_size[0]-text_rect.width)/2,600))`
+`text = fontspace.render(f'or Press ESC to leave the game', True, (255,255,255))`
+
+`text_rect = text.get_rect()`
+`screen.blit(text,((screen_size[0]-text_rect.width)/2,700))`
+`pygame.display.flip()`
+Vypíše instrukce pro další pokračování ve hře.
+
+`while  True:`
+&nbsp;&nbsp;&nbsp;&nbsp;`pygame.event.pump()`
+&nbsp;&nbsp;&nbsp;&nbsp;`keys = pygame.key.get_pressed()`
+&nbsp;&nbsp;&nbsp;&nbsp;`if keys[pygame.K_BACKSPACE]:`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`break`
+&nbsp;&nbsp;&nbsp;&nbsp;`if keys[pygame.K_ESCAPE]:`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`pygame.quit()`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`exit()`
+Umožní pustit další hru pomocí *backspace*, nebo zavřít celé okno pomocí *esc*
+
+## Credits
+František Václavek - pomoc s kódem
+Robert Hunter Shea - pomoc s kódem
