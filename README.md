@@ -122,6 +122,53 @@ Spočítá všechny velikosti fontů, tak aby se při *Death screenu* velikosti 
 `cells = int(input("cells: "))`
 `print("Press 'alt + tab'")` 
 `time.sleep(5)`
+
+### Hlavní cyklus pro opakování hry 
 Vezme vstupy od uživatele pro rychlost hada a počet políček. Naviguje jak postupovat dál a čeká 5 sekund než se spustí hra.
 
+`direction = (0,1)`
+`old_direction = (0,1)`
+Nastaví směr doprava
+
+`clock = pygame.time.Clock()`
+Nastaví proměnnou, aby se dále jednodušeji dalo nastavovat jak často se obrazovka bude obnovovat
+
+`score = 0`
+Vyresetuje score
+
+`max_len = cells*cells`
+Spočítá jak dlouhý musí být had, aby hráč danou hru vyhrál
+
+`apple = [random.randint(0,cells-1),random.randint(0,cells-1)]`
+Vygeneruje náhodnou pozici jablka pro začátek hry
+
+`snake = [[1,1]]`
+Nastaví první pozici hada doprava nahoru jedno políčko od obou stěn.
+
+`cell_size = screen_size[0]/cells`
+Spočítá jak velké bude každé políčko podle velikosti desky a počtu políček zadaným hráčem
+
+`background = pygame.Surface(screen_size)`
+`background.fill((6, 189, 36))`
+Vybarví herní plochu
+
+`for y in  range(cells):`
+&nbsp;&nbsp;&nbsp;&nbsp;`for x in  range(cells):`
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`if (x+y) % 2  ==  0:`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`pygame.draw.rect(background,[17, 140, 37],			[x*cell_size,y*cell_size,cell_size,cell_size])`
+Spočítá a vykreslí, kde mají být políčka jiné barvy pro vytvoření šachovnice
+
+`f = open("highscore.txt","r")`
+`highs = int(f.read().splitlines()[0])`
+`if highs >  0:`
+&nbsp;&nbsp;&nbsp;&nbsp;`highscore_str = f"highscore: {highs}"`
+`else:`
+&nbsp;&nbsp;&nbsp;&nbsp;`highscore_str = ""`
+najde *highscore* v souboru a zjistí pokud je větší než nula.
+
+`running = True`
+`movecount = speed`
+Nastaví další proměnné pro běh cyklu hry a rychlosti
+
+### Cyklus jednotlivých pokusů
 
