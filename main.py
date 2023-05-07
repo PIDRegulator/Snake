@@ -5,7 +5,7 @@ import time
 pygame.init()
 pygame.display.set_caption("Snake")
 
-screen_size_pixels = 900
+screen_size_pixels = 1000
 
 font_multiplier = screen_size_pixels/1000
 screen_size = (screen_size_pixels, screen_size_pixels) 
