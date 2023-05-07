@@ -172,3 +172,68 @@ Nastaví další proměnné pro běh cyklu hry a rychlosti
 
 ### Cyklus jednotlivých pokusů
 
+`clock.tick(120)`
+Nastaví kolikrát za sekundu se obrazovka obnoví
+
+`framerate = clock.get_fps()`
+`for event in pygame.event.get():`
+&nbsp;&nbsp;&nbsp;&nbsp;`if event.type == pygame.QUIT:`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`running = False`
+Zajistí aby se dalo ze hry odejít aniž by hra crashovala
+
+`keys = pygame.key.get_pressed()`
+`if keys[pygame.K_UP] or keys[pygame.K_w]:`
+&nbsp;&nbsp;&nbsp;&nbsp;`direction = (-1,0)`
+
+`if keys[pygame.K_DOWN] or keys[pygame.K_s]:`
+&nbsp;&nbsp;&nbsp;&nbsp;`direction = (1,0)`
+
+`if keys[pygame.K_LEFT] or keys[pygame.K_a]:`
+&nbsp;&nbsp;&nbsp;&nbsp;`direction = (0,-1)`
+
+`if keys[pygame.K_RIGHT] or keys[pygame.K_d]:`
+&nbsp;&nbsp;&nbsp;&nbsp;`direction = (0,1)`
+Bere vstup z klávesnice a mění podle toho směr jízdy hada.
+
+`if old_direction != direction and old_direction[0] + direction[0] ==  0:`
+&nbsp;&nbsp;&nbsp;&nbsp;`direction = old_direction`
+Znemožní otočit hada o 180° na jednou.
+
+`if movecount ==0:`
+&nbsp;&nbsp;&nbsp;&nbsp;`old_direction = direction`
+&nbsp;&nbsp;&nbsp;&nbsp;`new_y = snake[-1][0] + direction[0]`
+&nbsp;&nbsp;&nbsp;&nbsp;`new_x = snake[-1][1] + direction[1]`
+&nbsp;&nbsp;&nbsp;&nbsp;`new_body = [new_y,new_x]`
+Posune hada po uběhlém čase nastaveném před zapnutím hry.
+
+`if snake[-1][0] >= cells or snake[-1][1] >= cells:`
+&nbsp;&nbsp;&nbsp;&nbsp;`running = False`
+&nbsp;&nbsp;&nbsp;&nbsp;`continue`
+
+`if snake[-1][0] <  0  or snake[-1][1] <  0:`
+&nbsp;&nbsp;&nbsp;&nbsp;`running = False`
+&nbsp;&nbsp;&nbsp;&nbsp;`continue`
+Zjistí pokud had je mimo hrací plochu. Pokud ano hru přeruší.
+
+`if apple == new_body:`
+&nbsp;&nbsp;&nbsp;&nbsp;`score += 1`
+&nbsp;&nbsp;&nbsp;&nbsp;`!if  len(snake)+1>=max_len:`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`running = False`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`win = True`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`print("you won")`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`continue`
+&nbsp;&nbsp;&nbsp;&nbsp;`else:`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`while apple in snake+[new_body]:`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`apple = [random.randint(0,cells-1),random.randint(0,cells-1)]`
+`else:`
+&nbsp;&nbsp;&nbsp;&nbsp;`snake.pop(0)`
+`if new_body in snake:`
+&nbsp;&nbsp;&nbsp;&nbsp;`running = False`
+&nbsp;&nbsp;&nbsp;&nbsp;`continue`
+&nbsp;&nbsp;&nbsp;&nbsp;`snake.append(new_body)`
+&nbsp;&nbsp;&nbsp;&nbsp;`movecount = speed`
+Připočte bod pokud had snědl jablko. 
+Ukončí hru pokud had dosáhl maximální délky podle velikosti hracího pole a zaručí s´že se ukáže *win screen* místo *death screen*.
+Přidá nové jablko pokud had nedosáhl maximální délky.
+Zničí poslední políčko těla hada.
+Zajistí že hra se vypne pokud had nabourá sám do sebe.
